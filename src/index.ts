@@ -1,5 +1,3 @@
-const one = 1;
+const word = 'hello !';
 
-console.log(one);
-let a = 4;
-a = 6;
+console.log(word);
