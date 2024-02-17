@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const users: IUser[] = [
   {
-    id: uuidv4(),
+    id: '9baf251b-073f-4726-b08c-b588870c2f88',
     name: 'Mikhail',
     age: 39,
     hobbies: ['swimming', 'biking'],
