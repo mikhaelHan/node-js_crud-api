@@ -9,8 +9,8 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "nodemon --exec ts-node-dev --respawn --transpile-only ./src/index.ts",
-    "build": "webpack && node ./dist/bundle.js",
+    "start:dev": "cross-env PORT=4500 nodemon --exec ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "start:prod": "cross-env webpack && node ./dist/bundle.js",
     "test": "jest",
     "lint": "eslint ./src --fix",
     "format": "prettier --write \"src/**/*.ts\""
