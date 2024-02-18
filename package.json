@@ -9,7 +9,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "start:dev": "cross-env PORT=4500 nodemon --exec ts-node-dev --respawn --transpile-only ./src/index.ts",
+    "start:dev": "cross-env nodemon --exec ts-node-dev --respawn --transpile-only ./src/index.ts",
     "start:prod": "cross-env webpack && node ./dist/bundle.js",
     "test": "jest",
     "lint": "eslint ./src --fix",
