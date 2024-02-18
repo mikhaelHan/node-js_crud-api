@@ -53,9 +53,9 @@ export const addUser = async (req: IncomingMessage, res: ServerResponse) => {
     let body = '';
     req.on('data', chunk => (body += chunk.toString()));
     req.on('end', () => {
-      const newUser = JSON.parse(body);
+      const newUser: IUser = JSON.parse(body);
 
-      if (!newUser.name || !newUser.age || !newUser.hobbies) {
+      if (!newUser.username || !newUser.age || !newUser.hobbies) {
         res.statusCode = 400;
         res.end(
           JSON.stringify({
