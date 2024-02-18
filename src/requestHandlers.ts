@@ -55,7 +55,20 @@ export const addUser = async (req: IncomingMessage, res: ServerResponse) => {
     req.on('end', () => {
       const newUser: IUser = JSON.parse(body);
 
-      if (!newUser.username || !newUser.age || !newUser.hobbies) {
+      const validKeys = ['username', 'age', 'hobbies'];
+      const keys = Object.keys(newUser);
+      const hasExtraFields = keys.some(key => !validKeys.includes(key));
+
+      if (
+        hasExtraFields ||
+        !newUser.username ||
+        typeof newUser.username !== 'string' ||
+        !newUser.age ||
+        typeof newUser.age !== 'number' ||
+        !newUser.hobbies ||
+        !Array.isArray(newUser.hobbies) ||
+        !newUser.hobbies.every(hobby => typeof hobby === 'string')
+      ) {
         res.statusCode = 400;
         res.end(
           JSON.stringify({
@@ -92,8 +105,33 @@ export const updateUser = async (
       });
 
       req.on('end', () => {
-        const updatedFields = JSON.parse(body);
-        Object.assign(isUser, updatedFields);
+        const updatedUser = JSON.parse(body);
+
+        const validKeys = ['username', 'age', 'hobbies'];
+        const keys = Object.keys(updatedUser);
+        const hasExtraFields = keys.some(key => !validKeys.includes(key));
+
+        if (
+          hasExtraFields ||
+          !updatedUser.username ||
+          typeof updatedUser.username !== 'string' ||
+          !updatedUser.age ||
+          typeof updatedUser.age !== 'number' ||
+          !updatedUser.hobbies ||
+          !Array.isArray(updatedUser.hobbies) ||
+          !updatedUser.hobbies.every(
+            (hobby: unknown) => typeof hobby === 'string'
+          )
+        ) {
+          res.statusCode = 400;
+          res.end(
+            JSON.stringify({
+              error: 'Missing "name" or "age" or "hobbies" field',
+            })
+          );
+          return;
+        }
+        Object.assign(isUser, updatedUser);
 
         res.statusCode = 200;
         res.end(JSON.stringify(isUser));
